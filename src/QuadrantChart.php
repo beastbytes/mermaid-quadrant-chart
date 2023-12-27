@@ -10,9 +10,8 @@ namespace BeastBytes\Mermaid\QuadrantChart;
 
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
-use InvalidArgumentException;
 
-class QuadrantChart implements MermaidInterface
+final class QuadrantChart implements MermaidInterface
 {
     private const AXIS = '%s%s-axis %s';
     private const AXIS_CONNECTOR = ' --> ';
