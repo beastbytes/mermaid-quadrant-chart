@@ -1,7 +1,7 @@
 {
     "name": "beastbytes/mermaid-quadrant-chart",
     "type": "library",
-    "description": "Mermaid.js quadrant chart",
+    "description": "PHP for Mermaid.js quadrant charts",
     "keywords": [
         "mermaid",
         "quadrant chart"
