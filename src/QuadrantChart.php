@@ -32,10 +32,18 @@ final class QuadrantChart implements MermaidInterface
     {
     }
 
-    public function point(Point $point): self
+    public function addPoint(Point ...$point): self
     {
-        $this->points[] = $point;
-        return $this;
+        $new = clone $this;
+        $new->points = array_merge($this->points, $point);
+        return $new;
+    }
+
+    public function withPoint(Point ...$point): self
+    {
+        $new = clone $this;
+        $new->points = $point;
+        return $new;
     }
 
     public function render(): string

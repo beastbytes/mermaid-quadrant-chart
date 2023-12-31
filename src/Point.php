@@ -33,6 +33,7 @@ final class Point
         }
     }
 
+    /** @internal */
     public function render(string $indentation): string
     {
         return sprintf(self::POINT, $indentation, $this->name, $this->x, $this->y);
