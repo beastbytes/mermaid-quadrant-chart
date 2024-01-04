@@ -11,8 +11,9 @@ namespace BeastBytes\Mermaid\QuadrantChart;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
+use Stringable;
 
-final class QuadrantChart implements MermaidInterface
+final class QuadrantChart implements MermaidInterface, Stringable
 {
     use RenderItemsTrait;
 
@@ -30,6 +31,11 @@ final class QuadrantChart implements MermaidInterface
         private readonly array $quadrants
     )
     {
+    }
+
+    public function __toString(): string
+    {
+        return $this->render();
     }
 
     public function addPoint(Point ...$point): self
