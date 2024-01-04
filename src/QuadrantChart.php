@@ -10,13 +10,13 @@ namespace BeastBytes\Mermaid\QuadrantChart;
 
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
+use BeastBytes\Mermaid\RenderItemsTrait;
 
 final class QuadrantChart implements MermaidInterface
 {
-    private const AXIS = '%s%s-axis %s';
+    use RenderItemsTrait;
+
     private const AXIS_CONNECTOR = ' --> ';
-    private const QUADRANT = '%squadrant-%s %s';
-    private const TITLE = '%stitle %s';
     private const TYPE = 'quadrantChart';
 
     /** @var Point[] */
@@ -52,24 +52,24 @@ final class QuadrantChart implements MermaidInterface
         $output = [];
 
         $output[] = self::TYPE;
-        $output[] = sprintf(self::TITLE, Mermaid::INDENTATION, $this->title);
+        $output[] = Mermaid::INDENTATION . 'title ' . $this->title;
 
         foreach ($this->axes as $c => $axis) {
-            $output[] = sprintf(
-                self::AXIS,
-                Mermaid::INDENTATION,
-                $c,
-                is_string($axis) ? $axis : implode(self::AXIS_CONNECTOR, $axis)
-            );
+            $output[] = Mermaid::INDENTATION
+                . $c . '-axis '
+                . (is_string($axis) ? $axis : implode(self::AXIS_CONNECTOR, $axis))
+            ;
         }
 
         foreach ($this->quadrants as $i => $quadrant) {
-            $output[] = sprintf(self::QUADRANT, Mermaid::INDENTATION, ($i + 1), $quadrant);
+            $output[] = Mermaid::INDENTATION
+                . 'quadrant-' . ($i + 1)
+                . ' '
+                . $quadrant
+            ;
         }
 
-        foreach ($this->points as $point) {
-            $output[] = $point->render(Mermaid::INDENTATION);
-        }
+        $output[] = $this->renderItems($this->points, '');
 
         return Mermaid::render($output);
     }

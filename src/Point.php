@@ -13,7 +13,6 @@ use InvalidArgumentException;
 final class Point
 {
     private const EXCEPTION_MESSAGE = 'Point co-ordinates must be between 0 and 1 (inclusive); %s given for %s in %s';
-    private const POINT = '%s%s: [%s, %s]';
 
     public function __construct(
         private readonly string $name,
@@ -36,6 +35,6 @@ final class Point
     /** @internal */
     public function render(string $indentation): string
     {
-        return sprintf(self::POINT, $indentation, $this->name, $this->x, $this->y);
+        return $indentation . $this->name . ': [' . $this->x . ', ' . $this->y . ']';
     }
 }
