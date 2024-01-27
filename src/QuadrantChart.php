@@ -8,6 +8,7 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\QuadrantChart;
 
+use BeastBytes\Mermaid\CommentTrait;
 use BeastBytes\Mermaid\Mermaid;
 use BeastBytes\Mermaid\MermaidInterface;
 use BeastBytes\Mermaid\RenderItemsTrait;
@@ -15,6 +16,7 @@ use Stringable;
 
 final class QuadrantChart implements MermaidInterface, Stringable
 {
+    use CommentTrait;
     use RenderItemsTrait;
 
     private const AXIS_CONNECTOR = ' --> ';
@@ -52,11 +54,12 @@ final class QuadrantChart implements MermaidInterface, Stringable
         return $new;
     }
 
-    public function render(): string
+    public function render(array $attributes = []): string
     {
         /** @psalm-var list<string> $output */
         $output = [];
 
+        $this->renderComment('', $output);
         $output[] = self::TYPE;
         $output[] = Mermaid::INDENTATION . 'title ' . $this->title;
 
@@ -75,8 +78,8 @@ final class QuadrantChart implements MermaidInterface, Stringable
             ;
         }
 
-        $output[] = $this->renderItems($this->points, '');
+        $this->renderItems($this->points, '', $output);
 
-        return Mermaid::render($output);
+        return Mermaid::render($output, $attributes);
     }
 }

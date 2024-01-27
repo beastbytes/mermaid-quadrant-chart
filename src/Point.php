@@ -8,10 +8,13 @@ declare(strict_types=1);
 
 namespace BeastBytes\Mermaid\QuadrantChart;
 
+use BeastBytes\Mermaid\CommentTrait;
 use InvalidArgumentException;
 
 final class Point
 {
+    use CommentTrait;
+
     private const EXCEPTION_MESSAGE = 'Point co-ordinates must be between 0 and 1 (inclusive); %s given for %s in %s';
 
     public function __construct(
@@ -35,6 +38,11 @@ final class Point
     /** @internal */
     public function render(string $indentation): string
     {
-        return $indentation . $this->name . ': [' . $this->x . ', ' . $this->y . ']';
+        $output = [];
+
+        $this->renderComment($indentation, $output);
+        $output[] = $indentation . $this->name . ': [' . $this->x . ', ' . $this->y . ']';
+
+        return implode("\n", $output);
     }
 }
